@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Brydż Online">
     <title>Brydż Online</title>
-    <link rel="stylesheet" href="css/style.css?v=68">
+    <link rel="stylesheet" href="css/style.css?v=70">
 </head>
 
 <body>
@@ -189,6 +189,24 @@
                 <div id="lobby-room-code" class="room-code-display i18n" data-pl="ŁADOWANIE..." data-en="LOADING..."
                     data-es="CARGANDO...">
                     ŁADOWANIE...</div>
+
+                <div id="invite-link-box" class="invite-link-box" style="display: none;">
+                    <span class="i18n" data-pl="Lub wyślij link:" data-en="Or share link:"
+                        data-es="O comparte el enlace:"
+                        style="font-size: 12px; color: var(--text-secondary); margin-bottom: 4px;">Lub wyślij
+                        link:</span>
+                    <button id="btn-copy-invite" class="btn btn-small btn-secondary"
+                        style="width: 100%; font-size: 12px; padding: 8px 12px; min-width: auto; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                            <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
+                        </svg>
+                        <span id="invite-link-text" class="i18n" data-pl="Kopiuj link zaproszenia"
+                            data-en="Copy invite link" data-es="Copiar enlace de invitación">Kopiuj link
+                            zaproszenia</span>
+                    </button>
+                </div>
 
                 <div class="lobby-settings"
                     style="background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px; width: 100%; text-align: left;">
@@ -434,7 +452,7 @@
     <script src="js/game.js?v=60"></script>
     <script src="js/network.js?v=54"></script>
     <script src="js/ui.js?v=60"></script>
-    <script src="js/main.js?v=62"></script>
+    <script src="js/main.js?v=63"></script>
 
 </body>
 
