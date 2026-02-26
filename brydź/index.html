@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Brydż Online">
+    <title>Brydż Online</title>
+    <link rel="stylesheet" href="css/style.css?v=68">
+</head>
+
+<body>
+
+    <!-- Kijak do zmiany języka -->
+    <div id="lang-toggle"
+        style="position: absolute; top: 20px; left: 24px; z-index: 100; cursor: pointer; transition: transform 0.2s; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); user-select: none;"
+        title="Zmień język / Change language">
+        <img id="lang-flag-img" src="https://flagcdn.com/w40/pl.png" alt="PL"
+            style="width: 32px; height: auto; border-radius: 4px;">
+    </div>
+
+    <!-- ====== NICKNAME SCREEN ====== -->
+    <div id="nickname-screen" class="screen active">
+        <div class="menu-content">
+            <div class="menu-logo">
+                <h1 class="i18n" data-pl="Brydż" data-en="Bridge" data-es="Bridge">Brydż</h1>
+                <p class="menu-subtitle i18n" data-pl="Jak się nazywasz?" data-en="What's your name?"
+                    data-es="¿Cómo te llamas?">Jak się nazywasz?
+                </p>
+            </div>
+            <div class="menu-buttons" style="display: flex; flex-direction: column; gap: 15px; align-items: center;">
+                <input type="text" id="input-nickname" class="i18n-input" data-pl="Twój nick..."
+                    data-en="Your nickname..." data-es="Tu apodo..." placeholder="Twój nick..." maxlength="15"
+                    autocomplete="off"
+                    style="padding: 12px; font-size: 1.2rem; border-radius: 8px; border: 2px solid var(--border-color); background: var(--panel-bg); color: var(--text-primary); text-align: center; width: 80%;">
+                <button class="btn btn-primary i18n" id="btn-save-nickname" style="width: 80%;" data-pl="Dalej"
+                    data-en="Next" data-es="Siguiente">Dalej</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== MENU SCREEN ====== -->
+    <div id="menu-screen" class="screen">
+        <div class="menu-content">
+            <div class="menu-logo">
+                <h1 class="i18n" data-pl="Brydż" data-en="Bridge" data-es="Bridge">Brydż</h1>
+                <p class="menu-subtitle i18n" data-pl="Gra karciana online" data-en="Online Card Game"
+                    data-es="Juego de Cartas">Gra karciana
+                    online</p>
+            </div>
+
+            <div class="menu-cards-decoration">
+                <div class="menu-deco-card">♠</div>
+                <div class="menu-deco-card">♥</div>
+                <div class="menu-deco-card">♦</div>
+                <div class="menu-deco-card">♣</div>
+            </div>
+
+            <!-- MAIN MENU -->
+            <div class="menu-buttons" id="menu-main-buttons">
+                <button class="btn btn-primary i18n" id="btn-new-game" data-pl="Graj Lokalnie (Boty)"
+                    data-en="Play Local (Bots)" data-es="Jugar Local (Bots)">Graj Lokalnie (Boty)</button>
+                <button class="btn btn-primary i18n" id="btn-host-mp" style="background-color: #3b82f6;"
+                    data-pl="Stwórz Pokój (Multiplayer)" data-en="Create Room (Multiplayer)"
+                    data-es="Crear Sala (Multijugador)">Stwórz Pokój
+                    (Multiplayer)</button>
+                <button class="btn btn-secondary i18n" id="btn-join-mp" data-pl="Dołącz do Pokoju" data-en="Join Room"
+                    data-es="Unirse a la Sala">Dołącz do Pokoju</button>
+                <button class="btn btn-secondary i18n" id="btn-themes" data-pl="Motywy" data-en="Themes" data-es="Temas"
+                    style="margin-top: 8px;">Motywy</button>
+                <button class="btn btn-secondary i18n" id="btn-how-to-play"
+                    style="margin-top: 8px; font-size: 13px; padding: 10px 24px;" data-pl="Jak grać (Zasady)"
+                    data-en="How to play (Rules)" data-es="Cómo jugar (Reglas)">Jak grać (Zasady)</button>
+            </div>
+
+            <!-- SP SETUP -->
+            <div class="menu-lobby hidden" id="menu-sp-setup" style="gap: 12px; margin-top: -20px;">
+                <h2 class="i18n" data-pl="Graj Lokalnie" data-en="Play Local" data-es="Jugar Local">Graj Lokalnie</h2>
+
+                <div class="lobby-settings"
+                    style="background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px; width: 100%; text-align: left;">
+                    <label for="sp-rounds-slider"
+                        style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <span class="i18n" data-pl="Liczba rozdań:" data-en="Number of rounds:"
+                            data-es="Número de rondas:">Liczba rozdań:</span>
+                        <strong id="sp-rounds-display" style="color: var(--accent-gold);" class="i18n-dynamic"
+                            data-pl-zero="Brak limitu" data-en-zero="No limit" data-es-zero="Sin límite"
+                            data-pl-suffix="" data-en-suffix="" data-es-suffix="">Brak limitu</strong>
+                    </label>
+                    <input type="range" id="sp-rounds-slider" min="0" max="100" step="1" value="0"
+                        style="width: 100%; accent-color: var(--accent-emerald);">
+                </div>
+
+                <button class="btn btn-primary i18n" id="btn-start-sp" data-pl="Rozpocznij Grę" data-en="Start Game"
+                    data-es="Iniciar Juego">Rozpocznij Grę</button>
+                <button class="btn btn-secondary i18n" id="btn-cancel-sp" data-pl="Wróć" data-en="Back"
+                    data-es="Atrás">Wróć</button>
+            </div>
+
+            <!-- THEMES MENU -->
+            <div class="menu-lobby hidden" id="menu-themes" style="width: 320px;">
+                <h2 class="i18n" data-pl="Motywy" data-en="Themes" data-es="Temas">Motywy</h2>
+
+                <div class="theme-tabs bid-level-tabs" style="width: 100%;">
+                    <button class="bid-level-tab active i18n" data-tab="cards" data-pl="Karty" data-en="Cards"
+                        data-es="Cartas">Karty</button>
+                    <button class="bid-level-tab i18n" data-tab="bg" data-pl="Tło" data-en="Background"
+                        data-es="Fondo">Tło</button>
+                </div>
+
+                <!-- KARTY -->
+                <div id="theme-pane-cards" class="theme-pane"
+                    style="display: flex; flex-direction: column; gap: 8px; width: 100%; margin: 16px 0;">
+                    <button class="btn btn-secondary theme-select-btn active i18n" data-type="card" data-val="default"
+                        data-pl="Domyślne" data-en="Default" data-es="Por defecto">Domyślne</button>
+                    <button class="btn btn-secondary theme-select-btn i18n" data-type="card" data-val="classic"
+                        data-pl="Klasyczne" data-en="Classic" data-es="Clásico">Klasyczne</button>
+                    <button class="btn btn-secondary theme-select-btn i18n" data-type="card" data-val="dark"
+                        data-pl="Ciemne" data-en="Dark" data-es="Oscuro">Ciemne</button>
+                    <button class="btn btn-secondary theme-select-btn i18n" data-type="card" data-val="gold"
+                        data-pl="Złote" data-en="Gold" data-es="Dorado">Złote</button>
+                    <button class="btn btn-secondary theme-select-btn i18n" data-type="card" data-val="femboy"
+                        data-pl="Femboy" data-en="Femboy" data-es="Femboy">Femboy</button>
+                </div>
+
+                <!-- TŁO -->
+                <div id="theme-pane-bg" class="theme-pane"
+                    style="display: none; flex-direction: column; gap: 8px; width: 100%; margin: 16px 0;">
+                    <button class="btn btn-secondary theme-select-btn active i18n" data-type="bg" data-val="default"
+                        data-pl="Kasyno (Domyślne)" data-en="Casino (Default)" data-es="Casino (Por defecto)">Kasyno
+                        (Domyślne)</button>
+                    <button class="btn btn-secondary theme-select-btn i18n" data-type="bg" data-val="solid-green"
+                        data-pl="Klasyczna Zieleń" data-en="Classic Green" data-es="Verde Clásico">Klasyczna
+                        Zieleń</button>
+                    <button class="btn btn-secondary theme-select-btn i18n" data-type="bg" data-val="burgundy"
+                        data-pl="Bordowe" data-en="Burgundy" data-es="Borgoña">Bordowe</button>
+                    <button class="btn btn-secondary theme-select-btn i18n" data-type="bg" data-val="femboy"
+                        data-pl="Pastelowe (Femboy)" data-en="Pastel (Femboy)" data-es="Pastel (Femboy)">Pastelowe
+                        (Femboy)</button>
+                </div>
+
+                <button class="btn btn-primary i18n" id="btn-close-themes" data-pl="Zapisz i Wróć" data-en="Save & Back"
+                    data-es="Guardar y Atrás" style="margin-top: 8px; width: 100%;">Zapisz i
+                    Wróć</button>
+            </div>
+
+            <!-- RULES -->
+            <div class="menu-lobby hidden" id="menu-rules" style="max-width: 600px; text-align: left;">
+                <h2 style="text-align: center; margin-bottom: 20px;">Jak grać w Brydża?</h2>
+                <div class="rules-content"
+                    style="max-height: 50vh; overflow-y: auto; padding-right: 10px; font-size: 14px; line-height: 1.6;">
+                    <h3 style="color: var(--accent-gold); margin-bottom: 8px;">🎯 Cel Gry</h3>
+                    <p style="margin-bottom: 16px;">Brydż to gra karciana dla 4 osób podzielonych na 2 deble (N-S oraz
+                        E-W). Gra się pełną talią 52 kart. Celem jest wygranie <strong>licytacji</strong>, a następnie
+                        zrealizowanie zadeklarowanego <strong>kontraktu</strong> (wzięcie odpowiedniej liczby lew).</p>
+
+                    <h3 style="color: var(--accent-gold); margin-bottom: 8px;">🗣️ 1. Licytacja</h3>
+                    <p style="margin-bottom: 16px;">Gracze po kolei deklarują o ile lew więcej wezmą od tzw. "bazy"
+                        (która wynosi 6 lew).<br>Przykładowo, kontrakt <strong>1♠</strong> oznacza zobowiązanie Twojej
+                        drużyny do wzięcia w sumie 7 lew (1 + 6 baza) z pikami (♠) jako kolorem atutowym (Atut). Można
+                        grać również Bez Atu (NT). Licytacja kończy się dopiero po 3 ugodowych "Pasach" z rzędu.</p>
+
+                    <h3 style="color: var(--accent-gold); margin-bottom: 8px;">🃏 2. Rozgrywka i "Dziadek"</h3>
+                    <p style="margin-bottom: 16px;">Osoba z pary wygrywającej licytację, która jako pierwsza zgłosiła
+                        ten kolor atu, zostaje <strong>Rozgrywającym</strong>. Lewy sąsiad robi <strong>Wist</strong>
+                        (rzuca pierwszą kartę w całej grze ze swojej ręki). O rany! Przez to partner Rozgrywającego
+                        wykłada wszystkie swoje karty jako <strong>Dziadek</strong>. Od tego momentu milknie i to
+                        Rozgrywający sam podejmuje decyzje i rzuca kartami ze stołu w jego obronie.</p>
+
+                    <h3 style="color: var(--accent-gold); margin-bottom: 8px;">⚔️ 3. Zbieranie lew</h3>
+                    <p>Bezwzględnie i twardo <strong>obowiązuje wyrzucanie karty do takiego koloru jaki położył pierwszy
+                            gracz w lewie</strong>. Jeśli pierwsza rzucona była karta ♠ to Ty też musisz wyrzucić pika
+                        ze swojej ręki! Gdy nie masz ani jednej karty zagranego koloru, możesz albo zrzucić inną
+                        (przegrywając) lub użyć czaru ostatecznego czyli przebić <strong>Atutem</strong> (jeśli
+                        zadeklarowaliście go w licytacji). Najwyższa karta w żądanym kolorze lub najwyższy zagrany atut
+                        zwycięża pule 4 kart, zgarniając 1 lewę na twoje konto.</p>
+                </div>
+                <button class="btn btn-primary" id="btn-close-rules" style="margin-top: 24px; width: 100%;">Rozumiem, Do
+                    gry!</button>
+            </div>
+
+            <!-- HOST LOBBY -->
+            <div class="menu-lobby hidden" id="menu-lobby-host" style="gap: 12px; margin-top: -20px;">
+                <h2 class="i18n" data-pl="Twój Pokój (Host)" data-en="Your Room (Host)" data-es="Tu Sala (Anfitrión)">
+                    Twój Pokój (Host)</h2>
+                <p style="margin-bottom: 2px;" class="i18n" data-pl="Podaj znajomym ten kod:"
+                    data-en="Share this code with friends:" data-es="Comparte este código con amigos:">Podaj znajomym
+                    ten kod:</p>
+                <div id="lobby-room-code" class="room-code-display i18n" data-pl="ŁADOWANIE..." data-en="LOADING..."
+                    data-es="CARGANDO...">
+                    ŁADOWANIE...</div>
+
+                <div class="lobby-settings"
+                    style="background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px; width: 100%; text-align: left;">
+                    <label for="time-limit-slider"
+                        style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <span class="i18n" data-pl="Czas na ruch:" data-en="Turn time limit:"
+                            data-es="Límite de tiempo:">Czas na ruch:</span>
+                        <strong id="time-limit-display" style="color: var(--accent-gold);" class="i18n-dynamic"
+                            data-pl-zero="Brak limitu" data-en-zero="No limit" data-es-zero="Sin límite"
+                            data-pl-suffix=" s" data-en-suffix=" s" data-es-suffix=" s">Brak limitu</strong>
+                    </label>
+                    <input type="range" id="time-limit-slider" min="0" max="120" step="10" value="0"
+                        style="width: 100%; accent-color: var(--accent-emerald); margin-bottom: 12px;">
+
+                    <label for="mp-rounds-slider"
+                        style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <span class="i18n" data-pl="Liczba rozdań:" data-en="Number of rounds:"
+                            data-es="Número de rondas:">Liczba rozdań:</span>
+                        <strong id="mp-rounds-display" style="color: var(--accent-gold);" class="i18n-dynamic"
+                            data-pl-zero="Brak limitu" data-en-zero="No limit" data-es-zero="Sin límite"
+                            data-pl-suffix="" data-en-suffix="" data-es-suffix="">Brak limitu</strong>
+                    </label>
+                    <input type="range" id="mp-rounds-slider" min="0" max="100" step="1" value="0"
+                        style="width: 100%; accent-color: var(--accent-emerald);">
+                </div>
+
+                <div class="lobby-players">
+                    <span class="i18n" data-pl="Gracze w pokoju:" data-en="Players in room:"
+                        data-es="Jugadores en la sala:">Gracze w pokoju:</span>
+                    <ul id="host-players-list">
+                        <li class="i18n" data-pl="Ty (Host)" data-en="You (Host)" data-es="Tú (Anfitrión)">Ty (Host)
+                        </li>
+                    </ul>
+                </div>
+
+                <button class="btn btn-primary i18n" id="btn-start-mp" data-pl="Rozpocznij Grę" data-en="Start Game"
+                    data-es="Iniciar Juego" disabled>Rozpocznij Grę</button>
+                <button class="btn btn-secondary i18n" id="btn-cancel-lobby" data-pl="Zamknij" data-en="Close"
+                    data-es="Cerrar">Zamknij</button>
+            </div>
+
+            <!-- JOIN ROOM -->
+            <div class="menu-lobby hidden" id="menu-join">
+                <h2 class="i18n" data-pl="Dołącz do Znajomego" data-en="Join a Friend" data-es="Únete a un Amigo">Dołącz
+                    do Znajomego</h2>
+                <input type="text" id="input-room-code" class="room-code-input i18n-input" data-pl="WPISZ KOD"
+                    data-en="ENTER CODE" data-es="INTRODUCE CÓDIGO" placeholder="WPISZ KOD" maxlength="6"
+                    autocomplete="off">
+                <button class="btn btn-primary i18n" id="btn-connect" data-pl="Dołącz" data-en="Join"
+                    data-es="Unirse">Dołącz</button>
+                <p id="join-status-msg" class="status-msg"></p>
+                <button class="btn btn-secondary i18n" id="btn-cancel-join" data-pl="Wróć" data-en="Back"
+                    data-es="Atrás">Wróć</button>
+            </div>
+
+            <!-- CLIENT WAITING LOBBY -->
+            <div class="menu-lobby hidden" id="menu-lobby-client" style="gap: 12px; margin-top: -20px;">
+                <h2 class="i18n" data-pl="Oczekiwanie na start" data-en="Waiting for start" data-es="Esperando inicio">
+                    Oczekiwanie na start</h2>
+                <p style="margin-bottom: 2px;" class="i18n" data-pl="Kod pokoju do którego dołączyłeś:"
+                    data-en="Room code you joined:" data-es="Código de la sala:">Kod pokoju do którego dołączyłeś:</p>
+                <div id="client-room-code-display" class="room-code-display i18n" data-pl="ŁADOWANIE..."
+                    data-en="LOADING..." data-es="CARGANDO...">ŁADOWANIE...</div>
+
+                <div class="lobby-settings"
+                    style="background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px; width: 100%; text-align: left;">
+                    <span style="display: flex; justify-content: space-between;">
+                        <span class="i18n" data-pl="Limit czasu Hosta:" data-en="Host time limit:"
+                            data-es="Límite del anfitrión:">Limit czasu
+                            Hosta:</span>
+                        <strong id="client-time-limit-display" style="color: var(--accent-gold);" class="i18n-dynamic"
+                            data-pl-zero="Brak limitu" data-en-zero="No limit" data-es-zero="Sin límite"
+                            data-pl-suffix=" s" data-en-suffix=" s" data-es-suffix=" s">Oczekiwanie...</strong>
+                    </span>
+                </div>
+
+                <div class="lobby-players">
+                    <span class="i18n" data-pl="Gracze w pokoju:" data-en="Players in room:"
+                        data-es="Jugadores en la sala:">Gracze w pokoju:</span>
+                    <ul id="client-players-list">
+                        <li class="i18n" data-pl="Oczekiwanie na pobranie listy..." data-en="Waiting for player list..."
+                            data-es="Esperando la lista...">Oczekiwanie na pobranie listy...</li>
+                    </ul>
+                </div>
+
+                <button class="btn btn-primary i18n" data-pl="Oczekiwanie na hosta..." data-en="Waiting for host..."
+                    data-es="Esperando al anfitrión..." disabled>Oczekiwanie na hosta...</button>
+                <button class="btn btn-secondary i18n" id="btn-disconnect-client" data-pl="Wyjdź" data-en="Leave"
+                    data-es="Salir">Wyjdź</button>
+            </div>
+        </div>
+
+        <!-- Twitch branding -->
+        <div class="menu-branding">
+            <a href="https://twitch.tv/wiitsuu" target="_blank" rel="noopener noreferrer">
+                <svg class="twitch-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714Z" />
+                </svg>
+                twitch.tv/wiitsuu
+            </a>
+        </div>
+    </div>
+
+    <!-- ====== GAME SCREEN ====== -->
+    <div id="game-screen" class="screen">
+        <div id="time-progress-bar" class="time-progress-bar" style="width: 0%;"></div>
+        <div class="game-container">
+
+            <!-- Status Bar -->
+            <div id="status-bar" class="status-bar i18n" data-pl="Przygotowanie..." data-en="Preparing..."
+                data-es="Preparando...">
+                Przygotowanie...</div>
+
+            <!-- Game Info (top right) -->
+            <div class="game-info">
+                <div class="info-panel">
+                    <div class="label i18n" data-pl="Wynik" data-en="Score" data-es="Puntuación">Wynik</div>
+                    <div class="score-display">
+                        <div class="score-team ns">
+                            <div class="team-label">N-S</div>
+                            <div class="team-score" id="score-ns">0</div>
+                        </div>
+                        <div class="score-team ew">
+                            <div class="team-label">E-W</div>
+                            <div class="team-score" id="score-ew">0</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="info-panel" id="tricks-info-panel">
+                    <div class="label i18n" data-pl="Lewy" data-en="Tricks" data-es="Bazas">Lewy</div>
+                    <div id="tricks-info">
+                        <div class="tricks-display">
+                            <div class="trick-count">
+                                <div class="count-label">N-S</div>
+                                <div class="count-value" id="tricks-ns">0</div>
+                            </div>
+                            <div class="trick-count">
+                                <div class="count-label">E-W</div>
+                                <div class="count-value" id="tricks-ew">0</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="info-panel" id="contract-info" style="display: none;">
+                    <div class="label i18n" data-pl="Kontrakt" data-en="Contract" data-es="Contrato">Kontrakt</div>
+                    <div class="value" id="contract-value"></div>
+                </div>
+            </div>
+
+            <!-- Trump Info (top right) -->
+            <div id="trump-info" class="game-info" style="top: 20px; bottom: auto; display: none;">
+                <div class="info-panel"
+                    style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-width: 70px;">
+                    <div class="label i18n" data-pl="Atut" data-en="Trump" data-es="Triunfo"
+                        style="margin-bottom: 2px;">Atut</div>
+                    <div class="value" id="trump-suit-value"></div>
+                </div>
+            </div>
+
+            <!-- Player Areas -->
+            <!-- North -->
+            <div class="player-area north">
+                <div id="label-north" class="player-label">
+                    <span class="player-direction">N</span>
+                    <span class="player-name">Nord</span>
+                </div>
+                <div id="north-hand" class="hand horizontal north-hand"></div>
+            </div>
+
+            <!-- East -->
+            <div class="player-area east">
+                <div id="label-east" class="player-label">
+                    <span class="player-direction">E</span>
+                    <span class="player-name">Est</span>
+                </div>
+                <div id="east-hand" class="hand vertical east-hand"></div>
+            </div>
+
+            <!-- South (Player) -->
+            <div class="player-area south">
+                <div id="south-hand" class="hand horizontal south-hand"></div>
+                <div id="label-south" class="player-label" style="margin-bottom: 0; margin-top: 8px;">
+                    <span class="player-direction">S</span>
+                    <span class="player-name">Ty</span>
+                </div>
+            </div>
+
+            <!-- West -->
+            <div class="player-area west">
+                <div id="label-west" class="player-label">
+                    <span class="player-direction">W</span>
+                    <span class="player-name">West</span>
+                </div>
+                <div id="west-hand" class="hand vertical west-hand"></div>
+            </div>
+
+            <!-- Trick Area (center) -->
+            <div id="trick-area" class="trick-area"></div>
+
+            <!-- Waiting indicator -->
+            <div id="waiting-indicator" class="waiting-indicator">
+                <div class="waiting-dot"></div>
+                <div class="waiting-dot"></div>
+                <div class="waiting-dot"></div>
+            </div>
+
+            <!-- Bidding Panel -->
+            <div id="bidding-panel" class="bidding-panel" style="display: none;">
+                <div class="bidding-title">Licytacja</div>
+                <div id="bidding-history" class="bidding-history"></div>
+                <div id="bid-level-tabs" class="bid-level-tabs"></div>
+                <div id="bid-grid" class="bid-grid"></div>
+                <div id="bid-actions" class="bid-actions"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ====== SCORING OVERLAY ====== -->
+    <div id="scoring-overlay" class="scoring-overlay">
+        <div id="scoring-card" class="scoring-card"></div>
+    </div>
+
+    <!-- BUG REPORT -->
+    <div class="report-bug">
+        <a href="mailto:ogolnietobeka12@gmail.com?subject=Zgłoszenie%20Błędu%20-%20Brydż%20Online">
+            <svg viewBox="0 0 24 24" class="bug-icon">
+                <path
+                    d="M20 12v-1.4c0-3-2.1-5.6-5-6.3V3.5C15 2.7 14.3 2 13.5 2h-3C9.7 2 9 2.7 9 3.5v.8c-2.9.7-5 3.3-5 6.3V12H2v2h2v1c0 4.4 3.6 8 8 8s8-3.6 8-8v-1h2v-2h-2zm-12-1.4c0-2.2 1.8-4 4-4s4 1.8 4 4V12H8v-1.4zm4 10.4c-3.3 0-6-2.7-6-6v-1h12v1c0 3.3-2.7 6-6 6zm1-4h-2v-4h2v4z" />
+            </svg>
+            <span class="i18n" data-pl="Zgłoś Błąd" data-en="Report Bug" data-es="Reportar Error">Zgłoś Błąd</span>
+        </a>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script> <!-- Logika -->
+    <script src="js/card.js?v=56"></script>
+    <script src="js/bidding.js?v=54"></script>
+    <script src="js/trick.js?v=54"></script>
+    <script src="js/scoring.js?v=54"></script>
+    <script src="js/ai.js?v=54"></script>
+    <script src="js/game.js?v=60"></script>
+    <script src="js/network.js?v=54"></script>
+    <script src="js/ui.js?v=60"></script>
+    <script src="js/main.js?v=62"></script>
+
+</body>
+
+</html>
